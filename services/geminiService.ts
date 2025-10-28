@@ -91,14 +91,15 @@ export const generateBlogPost = async (
     pColor: string,
     usePColor: boolean
 ): Promise<PostOutput> => {
-  // Fix: Use process.env.API_KEY as per coding guidelines. This resolves the TypeScript error with `import.meta.env`.
-  // The API key must be obtained exclusively from the environment variable `process.env.API_KEY`.
-  if (!process.env.API_KEY) {
+  // Fix: Use process.env.API_KEY as per the coding guidelines. This resolves the TypeScript error.
+  const apiKey = process.env.API_KEY;
+
+  if (!apiKey) {
     // Provide a more specific error message to guide the user.
     throw new Error("API key is missing. Please ensure API_KEY is configured in your environment.");
   }
   
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey });
   const prompt = constructPrompt(topic, keywords, audience, author, h1Color, useH1Color, h2Color, useH2Color, h3Color, useH3Color, pColor, usePColor);
   
   try {
