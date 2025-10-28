@@ -9,6 +9,18 @@ const App: React.FC = () => {
   const [keywords, setKeywords] = useState('AI for small business, AI automation tools, small business productivity, automate marketing, AI customer service');
   const [audience, setAudience] = useState('Non-technical small business owners who feel overwhelmed by daily tasks and want to learn about simple, affordable AI solutions.');
   const [author, setAuthor] = useState('HSINI MOHAMED');
+  
+  // State for color inputs
+  const [h1Color, setH1Color] = useState('#a78bfa');
+  const [h2Color, setH2Color] = useState('#c4b5fd');
+  const [h3Color, setH3Color] = useState('#d1d5db');
+  const [pColor, setPColor] = useState('#9ca3af');
+
+  // State for conditional styling toggles
+  const [useH1Color, setUseH1Color] = useState(true);
+  const [useH2Color, setUseH2Color] = useState(true);
+  const [useH3Color, setUseH3Color] = useState(true);
+  const [usePColor, setUsePColor] = useState(true);
 
   const [generatedPost, setGeneratedPost] = useState<PostOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +35,20 @@ const App: React.FC = () => {
     setError(null);
     setGeneratedPost(null);
     try {
-      const post = await generateBlogPost(topic, keywords, audience, author);
+      const post = await generateBlogPost(
+        topic, 
+        keywords, 
+        audience, 
+        author,
+        h1Color,
+        useH1Color,
+        h2Color,
+        useH2Color,
+        h3Color,
+        useH3Color,
+        pColor,
+        usePColor
+      );
       setGeneratedPost(post);
     } catch (e: unknown) {
       const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
@@ -32,7 +57,7 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [topic, keywords, audience, author]);
+  }, [topic, keywords, audience, author, h1Color, useH1Color, h2Color, useH2Color, h3Color, useH3Color, pColor, usePColor]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col">
@@ -59,6 +84,22 @@ const App: React.FC = () => {
                 setAudience={setAudience}
                 author={author}
                 setAuthor={setAuthor}
+                h1Color={h1Color}
+                setH1Color={setH1Color}
+                useH1Color={useH1Color}
+                setUseH1Color={setUseH1Color}
+                h2Color={h2Color}
+                setH2Color={setH2Color}
+                useH2Color={useH2Color}
+                setUseH2Color={setUseH2Color}
+                h3Color={h3Color}
+                setH3Color={setH3Color}
+                useH3Color={useH3Color}
+                setUseH3Color={setUseH3Color}
+                pColor={pColor}
+                setPColor={setPColor}
+                usePColor={usePColor}
+                setUsePColor={setUsePColor}
                 onGenerate={handleGenerate}
                 isLoading={isLoading}
               />
