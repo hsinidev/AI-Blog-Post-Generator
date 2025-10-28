@@ -1,4 +1,4 @@
-
+// FIX: Removed Vite-specific reference which was causing a type error. The API key is now read from process.env.
 import { GoogleGenAI, Type } from "@google/genai";
 import { PostOutput } from "../components/OutputDisplay";
 
@@ -91,12 +91,13 @@ export const generateBlogPost = async (
     pColor: string,
     usePColor: boolean
 ): Promise<PostOutput> => {
-  // Fix: Use process.env.API_KEY as per the coding guidelines. This resolves the TypeScript error.
+  // FIX: Switched from Vite-specific `import.meta.env.VITE_API_KEY` to the standard `process.env.API_KEY`
+  // to align with Gemini API guidelines and resolve TypeScript errors.
   const apiKey = process.env.API_KEY;
 
   if (!apiKey) {
-    // Provide a more specific error message to guide the user.
-    throw new Error("API key is missing. Please ensure API_KEY is configured in your environment.");
+    // Provide a more specific error message to guide the user for local development.
+    throw new Error("API key is missing. Please ensure API_KEY is configured in your environment variables.");
   }
   
   const ai = new GoogleGenAI({ apiKey });
